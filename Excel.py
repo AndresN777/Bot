@@ -28,10 +28,12 @@ def obtener_datos_CITISALUD():
     #DFcitisalud.to_excel('z9\\FormularioAlterno.xlsx', index=False)
     return DFcitisalud
 
-#FILTRA LOS DATOS POR LABORATORIO
+"""#FILTRA LOS DATOS POR LABORATORIO
 def obtener_datos_ADB():
     df = obtener_datos_a_utilizar()
     DFadb = df[df["PROVEEDOR LAB"] == "ADB"]
-    return DFadb
+    return DFadb"""
+
+
 
 
