@@ -1,5 +1,5 @@
 import os
-from funciones import obtener_nombre_carpeta_principal
+from automation.utils import obtener_nombre_carpeta_principal
 
 MainFolderName = obtener_nombre_carpeta_principal()
 

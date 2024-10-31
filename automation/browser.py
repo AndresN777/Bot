@@ -1,10 +1,9 @@
 from playwright.sync_api import sync_playwright
-from Settingss import *
+from config.settings import *
 from time import sleep
-from Excel import *
-from funciones import *
+from datos.dat_def import *
+from utils import *
 import requests
-import os
 import pandas as pd
 
 #devuelve los divs de una clase determinada

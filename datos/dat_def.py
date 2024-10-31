@@ -1,5 +1,5 @@
 import pandas as pd
-from Settingss import *
+from config.settings import *
 from datetime import datetime
 
 """#Archivo = load_workbook("1. CONSOLIDADO DE  PACIENTES ATLANTICO A FECHA OCT 2023.xlsx")
