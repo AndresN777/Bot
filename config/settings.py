@@ -1,13 +1,21 @@
+import sys
 import os
+# Añadir la carpeta superior a sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 from automation.utils import obtener_nombre_carpeta_principal
+
+
 
 MainFolderName = obtener_nombre_carpeta_principal()
 
 #ARCHIVO DE EXCEL-------------------------------------------------
 NombreDeArchivo = '1_CONSOLIDADO_DE _PACIENTES_ATLANTICO_A_FECHA_OCT_2023.xlsx'
-RutaDeArchivo = "C:\\Users\\lnegr\\OneDrive\\Escritorio\\PROGRAMING\\BOT 1\\bt1\\DescargaLaboratorio\\z9\\ArchivoExcel\\1_CONSOLIDADO_DE _PACIENTES_ATLANTICO_A_FECHA_OCT_2023.xlsx"
-RutaDeArchivoAlterno = os.path.join('ArchivoExcel', NombreDeArchivo)
+#RutaDeArchivo = "C:\\Users\\lnegr\\OneDrive\\Escritorio\\PROGRAMING\\BOT 1\\bt1\\DescargaLaboratorio\\z9\\ArchivoExcel\\1_CONSOLIDADO_DE _PACIENTES_ATLANTICO_A_FECHA_OCT_2023.xlsx"
+RutaDeArchivo = os.path.join('ArchivoExcel', NombreDeArchivo)
 
+
+#os.path.join('ArchivoExcel', NombreDeArchivo)
 PaginaDeArchivo = "ACTUALIZADO A SEPTIEMBRE 2024"
 RangoDeFilasALeer = (2, 428)
 RangoDeColumnasALeer = 'A:AW'
