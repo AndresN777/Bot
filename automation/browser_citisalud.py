@@ -117,7 +117,7 @@ async def iniciar_bucle_iterativo(data,page):
 
             # Guarda pdf con el nombre de su paciente correspondiente
             sleep(0.5)
-            guardar_pdf(formatear_link_pdf(await obtener_link_pdf(page)),f'{rows["NOMBRE COMPLETO"]}_{rows["N° DE IDENTIFICACIÓN"]}_{datetime.now().strftime("%d-%H-%M-%S")}.pdf')
+            guardar_pdf(formatear_link_pdf(await obtener_link_pdf(page),"citisalud"),f'{rows["NOMBRE COMPLETO"]}_{rows["N° DE IDENTIFICACIÓN"]}_{datetime.now().strftime("%d-%H-%M-%S")}.pdf')
 
             # Agrega el indice del dataframe, del usuario descargado a la lista de usuarios completados o descargados
             IndicesUsuariosDescargados.append(index)
