@@ -4,10 +4,10 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from playwright.async_api import async_playwright
-from config.settings import MainFolderName, FolderRegist, Meses, URL, UsuarioCitisalud, ContraseñaCitisalud
+from config.settings import MainFolderName, FolderRegist, Meses, URLcitisalud, UsuarioCitisalud, ContraseñaCitisalud
 from time import sleep
 from datos.dat_def import obtener_datos_CITISALUD
-from utils import formatear_fecha_inicial_citisalud, formatear_link_pdf
+from automation.utils import formatear_fecha_inicial_citisalud, formatear_link_pdf
 import requests
 import pandas as pd
 from datetime import datetime
@@ -32,7 +32,7 @@ async def divs(pagina):
 
 #Login (Logea el navegador en la pagina de citisalud)--------------------------------------------------------
 async def login(page):
-    await page.goto(URL)
+    await page.goto(URLcitisalud)
     #Instroduce credenciales
     await page.fill("input#textfield-1044-inputEl", UsuarioCitisalud)
     await page.fill("input#textfield-1045-inputEl", ContraseñaCitisalud)

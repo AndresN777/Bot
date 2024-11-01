@@ -4,7 +4,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from playwright.async_api import async_playwright
-from config.settings import MainFolderName, FolderRegist, Meses, URL, UsuarioCitisalud, ContraseñaCitisalud
+from config.settings import URLadb, UsuarioADB, ContraseñaADB
 from time import sleep
 from datos.dat_def import obtener_datos_CITISALUD
 from utils import formatear_fecha_inicial_citisalud, formatear_link_pdf
@@ -13,3 +13,14 @@ import pandas as pd
 from datetime import datetime
 
 
+async def login(page):
+    await page.goto(URLadb)
+    await page.fill("input#in_usuario", UsuarioADB)
+    await page.click("button#btn_verificar")
+
+async def test():
+    async with async_playwright() as p:
+        navegador = await p.chromium.launch(headless=True,args=["--ignore-certificate-errors"])
+        page = await navegador.new_page()
+
+        await login(page)

@@ -35,10 +35,15 @@ Meses = ["ENERO",
          "DICIEMBRE"]
 
 #CITISALUD-----------------------------------------------------
-URL = "https://lis.citisalud.com.co:8087/resultados/"
+URLcitisalud = "https://lis.citisalud.com.co:8087/resultados/"
 UsuarioCitisalud = "901300333"
 ContraseñaCitisalud = "901300333"
 DatosDeInterez = ["N° DE IDENTIFICACIÓN", "NOMBRE COMPLETO"]
+
+#ADB-----------------------------------------------------------
+URLadb = "http://www.resultadoslab.com.co/resultadoslab/vistas/login.php?id=TEFCQURC"
+UsuarioADB= "CFUSA"
+ContraseñaADB = "Fus4/*21"
 
 #REGISTROS------------------------------------------------------
 FolderRegist = 'REGISTROS GUARDADOS'

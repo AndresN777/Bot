@@ -1,3 +1,8 @@
+import sys
+import os
+# Añadir la carpeta superior a sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 import pandas as pd
 from config.settings import RutaDeArchivo, PaginaDeArchivo, RangoDeColumnasALeer, RangoDeFilasALeer, Meses
 from datetime import datetime

@@ -53,5 +53,3 @@ def citisalud_task():
         print(type(resultados[1]))
         resultados[0].to_excel(os.path.join("ArchivoExcel", "citisalud", f"{datetime.now().year}", f"{Meses[datetime.now().month-1]}", "Pacientes faltantes.xlsx"),index=False)
         resultados[1].to_excel(os.path.join("ArchivoExcel", "citisalud", f"{datetime.now().year}", f"{Meses[datetime.now().month-1]}", "Pacientes descargados.xlsx"),index=False)
-
-citisalud_task()
