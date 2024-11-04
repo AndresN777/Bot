@@ -51,4 +51,6 @@ def obtener_datos_ADB():
     DFadb = df[df["PROVEEDOR LAB"] == "ADB"]
     return DFadb
 
-
+"""def obtener_datos_TAMARA():
+    df = obtener_datos_a_utilizar()
+    DFtamara = df[df["PROVEEDOR LAB"] == "CITISALUD"]"""

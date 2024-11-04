@@ -58,7 +58,7 @@ def guardar_pdf(url,nombre_archivo):
     ruta_completa = os.path.join(FolderRegist, f"{datetime.now().year}", f"{Meses[datetime.now().month-1]}", nombre_archivo)
 
     # Descargar el archivo pdf
-    response = requests.get(url)
+    response = requests.get(url, allow_redirects=True)
     with open(ruta_completa, 'wb') as file:
         file.write(response.content)
 
@@ -92,14 +92,15 @@ async def obtener_link_pdf(page):
 
 async def iniciar_bucle_iterativo(data,page):
     UsuariosNoDescargados = data
-    # Inicia un contador desde -1 debido a que el indice del dataframe inicia desde 0
-    cont = -1
+    # Inicia un contador desde 0
+    cont = 0
     # Crea lista donde se almacenarán los indices de los usuarios a los que se les logró descargar pdf
     IndicesUsuariosDescargados = []
     # Crea un dataframe para almacenar la info de los usuarios a los que se le descargó el pdf
     UsuariosDescargados = pd.DataFrame(columns=["N° DE IDENTIFICACIÓN", "NOMBRE COMPLETO"])
 
     for index, rows in data.iterrows():
+        cont = cont + 1
         """page.fill("input#textfield-1174-inputEl", "39092613") <------- IGNORAR"""
 
         # Rellena los datos de filtro  para obtener registros de un paciente en un mes determinado
@@ -128,18 +129,19 @@ async def iniciar_bucle_iterativo(data,page):
 
             # Se obtienen los posibles ID del boton close y se comprueban
             try:
-                for i in await obtener_boton_close(page):
-                    try:
-                        await page.click(f"#{i}", timeout=1000)
-                    except:
-                        print(".")
+                try:
+                    for i in await obtener_boton_close(page):
+                        try:
+                            await page.click(f"#{i}", timeout=1000)
+                        except:
+                            print(".")
+                except:
+                    await page.mouse.click(781,17)
+                    await page.mouse.click(1348,19)
             except:
-                await page.mouse.click(781,17)
-                await page.mouse.click(1348,19)
-
+                break
                 
         else:
-            cont = cont + 1
             print(f" Usuario N°{cont} NO descargado: {rows['NOMBRE COMPLETO']} {rows['N° DE IDENTIFICACIÓN']}")
             
             # Se agrega la info del usuario descargado al Dataframe de usuarios descargados

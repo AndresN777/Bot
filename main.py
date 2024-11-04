@@ -1,9 +1,10 @@
-from automation.tareas import citisalud_task
+from automation.tareas import citisalud_task, adb_task
 import schedule
 import time
 
-# Programar la función para que se ejecute todos los días a las 09:00 AM
+
 schedule.every().day.at("09:00").do(citisalud_task)
+schedule.every().day.at("09:10").do(adb_task)
 
 # Bucle para mantener el programa en ejecución y revisar tareas pendientes
 while True:

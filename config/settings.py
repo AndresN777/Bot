@@ -45,5 +45,8 @@ URLadb = "http://www.resultadoslab.com.co/resultadoslab/vistas/login.php?id=TEFC
 UsuarioADB= "CFUSA"
 ContraseñaADB = "Fus4/*21"
 
+#TAMARA---------------------------------------------------------
+URLtamara = "https://portaltamara.novaimaging.co/"
+
 #REGISTROS------------------------------------------------------
 FolderRegist = 'REGISTROS GUARDADOS'
