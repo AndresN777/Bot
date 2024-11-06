@@ -38,15 +38,25 @@ Meses = ["ENERO",
 URLcitisalud = "https://lis.citisalud.com.co:8087/resultados/"
 UsuarioCitisalud = "901300333"
 ContraseñaCitisalud = "901300333"
-DatosDeInterez = ["N° DE IDENTIFICACIÓN", "NOMBRE COMPLETO"]
+FolderRegistCitisalud = 'REGISTROS GUARDADOS\\citisalud'
 
 #ADB-----------------------------------------------------------
 URLadb = "http://www.resultadoslab.com.co/resultadoslab/vistas/login.php?id=TEFCQURC"
 UsuarioADB= "CFUSA"
 ContraseñaADB = "Fus4/*21"
+FolderRegistADB = 'REGISTROS GUARDADOS\\adb'
 
 #TAMARA---------------------------------------------------------
-URLtamara = "https://portaltamara.novaimaging.co/"
+URL1tamara = "https://portaltamara.novaimaging.co/"
+FolderRegistTAMARA = "REGISTROS GUARDADOS\\tamara"
+
+#IDIME-----------------------------------------------------------
+URLidime = "https://empresas.entregaresultados.net/WebsiteResultados/PortalIdime/Index.php?tipo=Empresa"
+UsuarioIdime = "7594108"
+ContraseñaIdime = "PIeX7LOX"
+FolderRegistIDIME = "REGISTROS GUARDADOS\\idime"
 
 #REGISTROS------------------------------------------------------
-FolderRegist = 'REGISTROS GUARDADOS'
+
+
+DatosDeInterez = ["N° DE IDENTIFICACIÓN", "NOMBRE COMPLETO"]

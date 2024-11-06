@@ -6,6 +6,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import pandas as pd
 from config.settings import RutaDeArchivo, PaginaDeArchivo, RangoDeColumnasALeer, RangoDeFilasALeer, Meses
 from datetime import datetime
+from automation.utils import verificar_fecha_tamara, contar_filas_excel
 
 """#Archivo = load_workbook("1. CONSOLIDADO DE  PACIENTES ATLANTICO A FECHA OCT 2023.xlsx")
 #Archivo = Archivo["ACTUALIZADO A SEPTIEMBRE 2024"]"""
@@ -19,7 +20,6 @@ def definir_dataframe():
                        skiprows=RangoDeFilasALeer[0],
                        nrows=RangoDeFilasALeer[1] - RangoDeFilasALeer[0])
     return df
-
 
 #Obtiene los datos utiles del mes currente----------------------------------------------------
 def obtener_datos_a_utilizar():
@@ -51,6 +51,24 @@ def obtener_datos_ADB():
     DFadb = df[df["PROVEEDOR LAB"] == "ADB"]
     return DFadb
 
-"""def obtener_datos_TAMARA():
-    df = obtener_datos_a_utilizar()
-    DFtamara = df[df["PROVEEDOR LAB"] == "CITISALUD"]"""
+def obtener_datos_TAMARA():
+    indices_to_delete = []
+    df = definir_dataframe()
+    DFtamara = df[df["PROVEEDOR "] == "TAMARA"]
+    for index,rows in DFtamara.iterrows():
+        #print(rows["RX MANOS Y PIES"])
+        if verificar_fecha_tamara(rows["RX MANOS Y PIES"]) == False:
+            indices_to_delete.append(index)
+    DFnuevo = DFtamara.drop(indices_to_delete)
+    return DFnuevo
+
+def definir_dataframe_idime():
+    ruta = os.path.join('ArchivoExcel', "idime.xlsx")
+    skiprows = 0
+    nrows = contar_filas_excel(ruta,"Hoja1")
+    df = pd.read_excel(ruta,
+                       usecols='A:C',
+                       skiprows=skiprows,
+                       nrows=nrows)
+    return df
+

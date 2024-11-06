@@ -4,7 +4,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from playwright.async_api import async_playwright, Page
-from config.settings import URLadb, UsuarioADB, ContraseñaADB, FolderRegist, Meses
+from config.settings import URLadb, UsuarioADB, ContraseñaADB, FolderRegistADB, Meses
 import pandas as pd
 from datetime import datetime
 import asyncio
@@ -19,15 +19,15 @@ async def handle_download(download, nombre_archivo, path):
 
 async def guardar_pdf(cedula,nombre_archivo):
     # Verifica si existe la carpeta donde se guardan los pdf, si no existen, las crea
-    if not os.path.exists(os.path.join(FolderRegist)):
-        os.makedirs(f'{FolderRegist}')
-    if not os.path.exists(os.path.join(FolderRegist,f"{datetime.now().year}")):
-        os.makedirs(f'{FolderRegist}\\{datetime.now().year}')
-    if not os.path.exists(os.path.join(FolderRegist,f"{datetime.now().year}", f"{Meses[datetime.now().month-1]}")):
-        os.makedirs(f'{FolderRegist}\\{datetime.now().year}\\{Meses[datetime.now().month-1]}')
+    if not os.path.exists(os.path.join(FolderRegistADB)):
+        os.makedirs(f'{FolderRegistADB}')
+    if not os.path.exists(os.path.join(FolderRegistADB,f"{datetime.now().year}")):
+        os.makedirs(f'{FolderRegistADB}\\{datetime.now().year}')
+    if not os.path.exists(os.path.join(FolderRegistADB,f"{datetime.now().year}", f"{Meses[datetime.now().month-1]}")):
+        os.makedirs(f'{FolderRegistADB}\\{datetime.now().year}\\{Meses[datetime.now().month-1]}')
 
     # Concatena los nombres de las carpetas para formar un string que da la ubicación que le corresponde al pdf
-    ruta_completa = os.path.join(FolderRegist, f"{datetime.now().year}", f"{Meses[datetime.now().month-1]}")
+    ruta_completa = os.path.join(FolderRegistADB, f"{datetime.now().year}", f"{Meses[datetime.now().month-1]}")
 
     async with async_playwright() as p:
         navegador = await p.chromium.launch(headless=True,args=["--ignore-certificate-errors"])

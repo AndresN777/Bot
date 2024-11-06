@@ -4,7 +4,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from playwright.async_api import async_playwright
-from config.settings import MainFolderName, FolderRegist, Meses, URLcitisalud, UsuarioCitisalud, ContraseñaCitisalud
+from config.settings import MainFolderName, FolderRegistCitisalud, Meses, URLcitisalud, UsuarioCitisalud, ContraseñaCitisalud
 from time import sleep
 from datos.dat_def import obtener_datos_CITISALUD
 from automation.utils import formatear_fecha_inicial_citisalud, formatear_link_pdf
@@ -47,15 +47,15 @@ async def login(page):
 #Función de guardar pdf en la ubicacion que le corresponde segun la fecha-------------------------------------------------------------
 def guardar_pdf(url,nombre_archivo):
     # Verifica si existe la carpeta donde se guardan los pdf, si no existen, las crea
-    if not os.path.exists(os.path.join(FolderRegist)):
-        os.makedirs(f'{FolderRegist}')
-    if not os.path.exists(os.path.join(FolderRegist,f"{datetime.now().year}")):
-        os.makedirs(f'{FolderRegist}\\{datetime.now().year}')
-    if not os.path.exists(os.path.join(FolderRegist,f"{datetime.now().year}", f"{Meses[datetime.now().month-1]}")):
-        os.makedirs(f'{FolderRegist}\\{datetime.now().year}\\{Meses[datetime.now().month-1]}')
+    if not os.path.exists(os.path.join(FolderRegistCitisalud)):
+        os.makedirs(f'{FolderRegistCitisalud}')
+    if not os.path.exists(os.path.join(FolderRegistCitisalud,f"{datetime.now().year}")):
+        os.makedirs(f'{FolderRegistCitisalud}\\{datetime.now().year}')
+    if not os.path.exists(os.path.join(FolderRegistCitisalud,f"{datetime.now().year}", f"{Meses[datetime.now().month-1]}")):
+        os.makedirs(f'{FolderRegistCitisalud}\\{datetime.now().year}\\{Meses[datetime.now().month-1]}')
 
     # Concatena los nombres de las carpetas para formar un string que da la ubicación que le corresponde al pdf
-    ruta_completa = os.path.join(FolderRegist, f"{datetime.now().year}", f"{Meses[datetime.now().month-1]}", nombre_archivo)
+    ruta_completa = os.path.join(FolderRegistCitisalud, f"{datetime.now().year}", f"{Meses[datetime.now().month-1]}", nombre_archivo)
 
     # Descargar el archivo pdf
     response = requests.get(url, allow_redirects=True)

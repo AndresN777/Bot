@@ -4,12 +4,13 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 
-from datos.dat_def import obtener_datos_CITISALUD, obtener_datos_ADB
+from datos.dat_def import obtener_datos_CITISALUD, obtener_datos_ADB, obtener_datos_TAMARA, definir_dataframe_idime
 from automation.browser_citisalud import ejecutar_proceso_citisalud
 from automation.browser_adb import ejecutar_proceso_adb
-from time import sleep
+from automation.browser_tamara import ejecutar_proceso_tamara
+from automation.browser_idime import ejecutar_proceso_idime
 import pandas as pd
-from config.settings import Meses
+from config.settings import Meses, PaginaDeArchivo
 from datetime import datetime
 import asyncio
 
@@ -90,4 +91,63 @@ def adb_task():
         print(type(resultados[1]))
         resultados[0].to_excel(os.path.join("ArchivoExcel", "adb", f"{datetime.now().year}", f"{Meses[datetime.now().month-1]}", "Pacientes faltantes.xlsx"),index=False)
         resultados[1].to_excel(os.path.join("ArchivoExcel", "adb", f"{datetime.now().year}", f"{Meses[datetime.now().month-1]}", "Pacientes descargados.xlsx"),index=False)
-adb_task()
+
+def tamara_task():
+    if not os.path.exists(os.path.join("ArchivoExcel", "tamara", f"{PaginaDeArchivo}")):
+        os.makedirs(f'ArchivoExcel\\tamara\\{PaginaDeArchivo}')
+    
+    if os.path.exists(os.path.join("ArchivoExcel", "tamara", f"{PaginaDeArchivo}", "Pacientes faltantes.xlsx")):
+        Dataframe = pd.read_excel(os.path.join("ArchivoExcel", "tamara", f"{PaginaDeArchivo}", "Pacientes faltantes.xlsx"))
+        resultados = asyncio.run(ejecutar_proceso_tamara(Dataframe))
+
+        resultados[0].to_excel(os.path.join("ArchivoExcel", "tamara", f"{PaginaDeArchivo}", "Pacientes faltantes.xlsx"),index=False)
+
+        if os.path.exists(os.path.join("ArchivoExcel", "tamara", f"{PaginaDeArchivo}", "Pacientes descargados.xlsx")):
+            df = pd.read_excel(os.path.join("ArchivoExcel", "tamara", f"{PaginaDeArchivo}", "Pacientes descargados.xlsx"))
+            df = pd.concat([df,resultados[1]], ignore_index=False)
+            df.to_excel(os.path.join("ArchivoExcel", "tamara", f"{PaginaDeArchivo}", "Pacientes descargados.xlsx"))
+        else:
+            resultados[1].to_excel(os.path.join("ArchivoExcel", "tamara", f"{PaginaDeArchivo}", "Pacientes descargados.xlsx"),index=False)
+    
+    else:
+        Dataframe = obtener_datos_TAMARA()
+        resultados = asyncio.run(ejecutar_proceso_tamara(Dataframe))
+        print(type(resultados))
+        print(type(resultados[1]))
+        resultados[0].to_excel(os.path.join("ArchivoExcel", "tamara", f"{PaginaDeArchivo}", "Pacientes faltantes.xlsx"),index=False)
+        resultados[1].to_excel(os.path.join("ArchivoExcel", "tamara", f"{PaginaDeArchivo}", "Pacientes descargados.xlsx"),index=False)
+
+
+def idime_task():
+    if not os.path.exists(os.path.join("ArchivoExcel", "idime", f"{datetime.now().year}", f"{Meses[datetime.now().month-1]}")):
+        os.makedirs(f'ArchivoExcel\\idime\\{datetime.now().year}\\{Meses[datetime.now().month-1]}')
+    
+    if os.path.exists(os.path.join("ArchivoExcel", "idime", f"{datetime.now().year}", f"{Meses[datetime.now().month-1]}", "Pacientes faltantes.xlsx")):
+        Dataframe = pd.read_excel(os.path.join("ArchivoExcel", "idime", f"{datetime.now().year}", f"{Meses[datetime.now().month-1]}", "Pacientes faltantes.xlsx"))
+        
+        resultados = asyncio.run(ejecutar_proceso_idime(Dataframe))
+
+        resultados[0].to_excel(os.path.join("ArchivoExcel", "idime", f"{datetime.now().year}", f"{Meses[datetime.now().month-1]}", "Pacientes faltantes.xlsx"),index=False)
+
+        if os.path.exists(os.path.join("ArchivoExcel", "idime", f"{datetime.now().year}", f"{Meses[datetime.now().month-1]}", "Pacientes descargados.xlsx")):
+            df = pd.read_excel(os.path.join("ArchivoExcel", "idime", f"{datetime.now().year}", f"{Meses[datetime.now().month-1]}", "Pacientes descargados.xlsx"))
+            df = pd.concat([df,resultados[1]], ignore_index=False)
+            df.to_excel(os.path.join("ArchivoExcel", "idime", f"{datetime.now().year}", f"{Meses[datetime.now().month-1]}", "Pacientes descargados.xlsx"))
+        else:
+            resultados[1].to_excel(os.path.join("ArchivoExcel", "idime", f"{datetime.now().year}", f"{Meses[datetime.now().month-1]}", "Pacientes descargados.xlsx"),index=False)
+    
+    else:
+        Dataframe = definir_dataframe_idime()
+        resultados = asyncio.run(ejecutar_proceso_idime(Dataframe))
+        print(type(resultados))
+        print(type(resultados[1]))
+        resultados[0].to_excel(os.path.join("ArchivoExcel", "idime", f"{datetime.now().year}", f"{Meses[datetime.now().month-1]}", "Pacientes faltantes.xlsx"),index=False)
+        resultados[1].to_excel(os.path.join("ArchivoExcel", "idime", f"{datetime.now().year}", f"{Meses[datetime.now().month-1]}", "Pacientes descargados.xlsx"),index=False)
+
+def función_madre():
+    citisalud_task()
+    adb_task()
+    tamara_task()
+    idime_task()
+
+tamara_task()

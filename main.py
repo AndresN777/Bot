@@ -1,10 +1,14 @@
-from automation.tareas import citisalud_task, adb_task
+import sys
+import os
+# Añadir la carpeta superior a sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+from automation.tareas import función_madre
 import schedule
 import time
 
 
-schedule.every().day.at("09:00").do(citisalud_task)
-schedule.every().day.at("09:10").do(adb_task)
+schedule.every().day.at("15:23").do(función_madre())
 
 # Bucle para mantener el programa en ejecución y revisar tareas pendientes
 while True:
