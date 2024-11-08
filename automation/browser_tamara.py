@@ -3,7 +3,6 @@ import os
 # Añadir la carpeta superior a sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from datos.dat_def import obtener_datos_TAMARA
 from playwright.async_api import async_playwright, Page
 from config.settings import URL1tamara, URL2tamara, FolderRegistTAMARA, Meses, PaginaDeArchivo
 import pandas as pd

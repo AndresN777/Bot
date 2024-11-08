@@ -5,7 +5,6 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from playwright.async_api import async_playwright, Page
 from config.settings import URLadb, UsuarioADB, ContraseñaADB, FolderRegistADB, Meses
-from datos.dat_def import obtener_datos_ADB
 import pandas as pd
 from datetime import datetime
 import asyncio

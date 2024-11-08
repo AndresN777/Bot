@@ -7,7 +7,6 @@ from playwright.async_api import async_playwright, Page
 from config.settings import URLidime, UsuarioIdime, ContraseñaIdime, FolderRegistIDIME, Meses
 import pandas as pd
 from datetime import datetime
-from datos.dat_def import definir_dataframe_idime
 import asyncio
 import zipfile
 
