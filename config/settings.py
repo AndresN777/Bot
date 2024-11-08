@@ -48,6 +48,7 @@ FolderRegistADB = 'REGISTROS GUARDADOS\\adb'
 
 #TAMARA---------------------------------------------------------
 URL1tamara = "https://portaltamara.novaimaging.co/"
+URL2tamara = "https://tamara2.hiruko.com.co/portal/login"
 FolderRegistTAMARA = "REGISTROS GUARDADOS\\tamara"
 
 #IDIME-----------------------------------------------------------
@@ -55,6 +56,12 @@ URLidime = "https://empresas.entregaresultados.net/WebsiteResultados/PortalIdime
 UsuarioIdime = "7594108"
 ContraseñaIdime = "PIeX7LOX"
 FolderRegistIDIME = "REGISTROS GUARDADOS\\idime"
+
+#ISABEL CURIEL-----------------------------------------------------
+URLisabel = "http://www.resultadoslab.com.co/resultadoslab/vistas/login.php?id=SVNBQkVMQ1VS"
+UsuarioIsabel = "IPS_FUSA"
+ContraseñaIsabel = "labisabel"
+FolderRegistISABEL = "REGISTROS GUARDADOS\\isabel curiel"
 
 #REGISTROS------------------------------------------------------
 

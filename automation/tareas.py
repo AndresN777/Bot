@@ -135,7 +135,7 @@ def idime_task():
             df.to_excel(os.path.join("ArchivoExcel", "idime", f"{datetime.now().year}", f"{Meses[datetime.now().month-1]}", "Pacientes descargados.xlsx"))
         else:
             resultados[1].to_excel(os.path.join("ArchivoExcel", "idime", f"{datetime.now().year}", f"{Meses[datetime.now().month-1]}", "Pacientes descargados.xlsx"),index=False)
-    
+
     else:
         Dataframe = definir_dataframe_idime()
         resultados = asyncio.run(ejecutar_proceso_idime(Dataframe))
@@ -147,7 +147,5 @@ def idime_task():
 def función_madre():
     citisalud_task()
     adb_task()
-    tamara_task()
     idime_task()
-
-tamara_task()
+    tamara_task()

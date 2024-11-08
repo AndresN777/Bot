@@ -110,39 +110,45 @@ async def iniciar_bucle_iterativo(data,page):
         await page.click("#button-1177-btnIconEl")
         sleep(1)
         #Revisa si hay registros disponibles
-        if await page.locator('.x-grid-row-checker').count() > 0:
-            # Marcar registro
-            await page.mouse.click(286,371)
-            # Click boton de ver pdf
-            await page.click("#RB001-btnIconEl")
-
-            # Guarda pdf con el nombre de su paciente correspondiente
-            sleep(0.5)
-            guardar_pdf(formatear_link_pdf(await obtener_link_pdf(page),"citisalud"),f'{rows["NOMBRE COMPLETO"]}_{rows["N° DE IDENTIFICACIÓN"]}_{datetime.now().strftime("%d-%H-%M-%S")}.pdf')
-
-            # Agrega el indice del dataframe, del usuario descargado a la lista de usuarios completados o descargados
-            IndicesUsuariosDescargados.append(index)
-            UsuariosDescargados.loc[len(UsuariosDescargados)] = [rows["N° DE IDENTIFICACIÓN"], rows["NOMBRE COMPLETO"]]
-
-            
-            print(f" Usuario N°{cont} SI descargado: {rows['NOMBRE COMPLETO']} {rows['N° DE IDENTIFICACIÓN']}")
-
-            # Se obtienen los posibles ID del boton close y se comprueban
-            try:
+        try:
+            if await page.locator('.x-grid-row-checker').count() > 0:
+                # Marcar registro
+                await page.mouse.click(286,371)
+                # Click boton de ver pdf
                 try:
-                    for i in await obtener_boton_close(page):
-                        try:
-                            await page.click(f"#{i}", timeout=1000)
-                        except:
-                            print(".")
+                    await page.click("#RB001-btnIconEl")
                 except:
-                    await page.mouse.click(781,17)
-                    await page.mouse.click(1348,19)
-            except:
-                break
+                    await page.mouse.click(1004,157)
+
+                # Guarda pdf con el nombre de su paciente correspondiente
+                sleep(0.5)
+                guardar_pdf(formatear_link_pdf(await obtener_link_pdf(page),"citisalud"),f'{rows["NOMBRE COMPLETO"]}_{rows["N° DE IDENTIFICACIÓN"]}_{datetime.now().strftime("%d-%H-%M-%S")}.pdf')
+
+                # Agrega el indice del dataframe, del usuario descargado a la lista de usuarios completados o descargados
+                IndicesUsuariosDescargados.append(index)
+                UsuariosDescargados.loc[len(UsuariosDescargados)] = [rows["N° DE IDENTIFICACIÓN"], rows["NOMBRE COMPLETO"]]
+
                 
-        else:
-            print(f" Usuario N°{cont} NO descargado: {rows['NOMBRE COMPLETO']} {rows['N° DE IDENTIFICACIÓN']}")
+                print(f" Usuario N°{cont} SI descargado: {rows['NOMBRE COMPLETO']} {rows['N° DE IDENTIFICACIÓN']}")
+
+                # Se obtienen los posibles ID del boton close y se comprueban
+                try:
+                    try:
+                        for i in await obtener_boton_close(page):
+                            try:
+                                await page.click(f"#{i}", timeout=1000)
+                            except:
+                                print(".")
+                    except:
+                        await page.mouse.click(781,17)
+                        await page.mouse.click(1348,19)
+                except:
+                    break
+                    
+            else:
+                print(f" Usuario N°{cont} NO descargado: {rows['NOMBRE COMPLETO']} {rows['N° DE IDENTIFICACIÓN']}")
+        except:
+            break
             
             # Se agrega la info del usuario descargado al Dataframe de usuarios descargados
 

@@ -4,31 +4,24 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from playwright.async_api import async_playwright, Page
-from config.settings import URLadb, UsuarioADB, ContraseñaADB, FolderRegistADB, Meses
+from config.settings import URLisabel, UsuarioIsabel, ContraseñaIsabel, FolderRegistISABEL, Meses
 from datos.dat_def import obtener_datos_ADB
 import pandas as pd
 from datetime import datetime
 import asyncio
 
 
-async def handle_download(download, nombre_archivo, path):
-    filename = await download.path()  
-    new_filename = nombre_archivo
-    new_file_path = path  
-    
-    await download.save_as(new_file_path)  # Renombra el archivo
-
 async def guardar_pdf(cedula,nombre_archivo):
     # Verifica si existe la carpeta donde se guardan los pdf, si no existen, las crea
-    if not os.path.exists(os.path.join(FolderRegistADB)):
-        os.makedirs(f'{FolderRegistADB}')
-    if not os.path.exists(os.path.join(FolderRegistADB,f"{datetime.now().year}")):
-        os.makedirs(f'{FolderRegistADB}\\{datetime.now().year}')
-    if not os.path.exists(os.path.join(FolderRegistADB,f"{datetime.now().year}", f"{Meses[datetime.now().month-1]}")):
-        os.makedirs(f'{FolderRegistADB}\\{datetime.now().year}\\{Meses[datetime.now().month-1]}')
+    if not os.path.exists(os.path.join(FolderRegistISABEL)):
+        os.makedirs(f'{FolderRegistISABEL}')
+    if not os.path.exists(os.path.join(FolderRegistISABEL,f"{datetime.now().year}")):
+        os.makedirs(f'{FolderRegistISABEL}\\{datetime.now().year}')
+    if not os.path.exists(os.path.join(FolderRegistISABEL,f"{datetime.now().year}", f"{Meses[datetime.now().month-1]}")):
+        os.makedirs(f'{FolderRegistISABEL}\\{datetime.now().year}\\{Meses[datetime.now().month-1]}')
 
     # Concatena los nombres de las carpetas para formar un string que da la ubicación que le corresponde al pdf
-    ruta_completa = os.path.join(FolderRegistADB, f"{datetime.now().year}", f"{Meses[datetime.now().month-1]}")
+    ruta_completa = os.path.join(FolderRegistISABEL, f"{datetime.now().year}", f"{Meses[datetime.now().month-1]}")
 
     async with async_playwright() as p:
         navegador = await p.chromium.launch(headless=True,args=["--ignore-certificate-errors"])
@@ -51,11 +44,11 @@ async def guardar_pdf(cedula,nombre_archivo):
         await navegador.close()
 
 async def login(page):
-    await page.goto(URLadb)
-    await page.fill("input#in_usuario", UsuarioADB)
+    await page.goto(URLisabel)
+    await page.fill("input#in_usuario", UsuarioIsabel)
     await page.click("button#btn_verificar")
     await asyncio.sleep(0.5)
-    await page.fill("input#in_contrasena", ContraseñaADB)
+    await page.fill("input#in_contrasena", ContraseñaIsabel)
     await page.click("button#btn_ingresar")
     return page
 
@@ -73,19 +66,23 @@ async def buscar_registro_paciente(page: Page, cedula_paciente):
     await search_input.fill(f"{cedula_paciente}")
 
 async def descargar_registro(page: Page,nombre_de_archivo, cedula):
-    if await page.locator(".odd").count() > 0:
-        await guardar_pdf(cedula, nombre_de_archivo)
-        return True
-    else:
+    try:
+        if await page.locator(".fa fa-file-pdf-o").count() > 0:
+            await guardar_pdf(cedula, nombre_de_archivo)
+            return True
+        else:
+            return False
+        """if await page.locator(".odd").count() > 0:
+            boton_pdf = page.locator("a.btn.btn-danger.btn-circle").first
+            await boton_pdf.click()
+            return True
+        else:
+            return False"""
+    except:
         return False
-    """if await page.locator(".odd").count() > 0:
-        boton_pdf = page.locator("a.btn.btn-danger.btn-circle").first
-        await boton_pdf.click()
-        return True
-    else:
-        return False"""
+    
 
-async def Bucle_iterar_pacientes_adb(data, pagina: Page):
+async def Bucle_iterar_pacientes_adb(data: pd.DataFrame, pagina: Page):
     UsuariosNoDescargados = data
     IndicesUsuariosDescargados = []
     UsuariosDescargados = pd.DataFrame(columns=["N° DE IDENTIFICACIÓN", "NOMBRE COMPLETO"])
@@ -127,6 +124,8 @@ async def iniciar_recorrido_pacientes_adb(data):
 async def ejecutar_proceso_adb(dat: pd.DataFrame):
     resultados = await iniciar_recorrido_pacientes_adb(dat)
     return resultados
+
+asyncio.run(iniciar_recorrido_pacientes_adb(obtener_datos_ADB()))
 
 """async def test():
     async with async_playwright() as p:

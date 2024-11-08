@@ -31,7 +31,17 @@ def obtener_nombre_carpeta_principal(): #Obtiene el nombre de la carpeta en la q
 def formatear_fecha_tamara(fecha):
     text = f"{fecha}"
     return [text, [int(text[8:10]), int(text[5:7]), int(text[:4])]]
-    
+
+def verificar_pagina_tamara(fecha):
+    """if not f"{fecha}"[:4].isdigit():
+        return 0"""
+    año = int(f"{fecha}"[:4])
+    año_actual = int(f"{datetime.now().year}")
+    if año < año_actual:
+        return False
+    else:
+        return True
+
 def verificar_fecha_tamara(fecha):
     if not f"{fecha}"[:4].isdigit():
         return False
