@@ -170,7 +170,7 @@ async def bucle_iterativo_pacientes(data: pd.DataFrame):
     cont = 0
 
     async with async_playwright() as p:
-        navegador = await p.chromium.launch(headless=False,args=["--ignore-certificate-errors"])
+        navegador = await p.chromium.launch(headless=True,args=["--ignore-certificate-errors"])
         context = await navegador.new_context()
         for index, rows in data.iterrows():
             cont = cont + 1
